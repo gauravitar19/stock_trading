@@ -61,12 +61,15 @@ export default function Layout({ children, title = 'Stock Trading Platform' }) {
     setConnectionError('');
     
     try {
-      // Simulate API validation with a timeout
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Test the API key with a simple request
+      const response = await fetch(
+        `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=${apiKey}`
+      );
+      const data = await response.json();
       
-      // In a real app, this would be an actual API call to verify the key
-      if (apiKey === 'invalid') {
-        throw new Error('Invalid API key');
+      // Check if the API returned an error
+      if (data['Error Message'] || data['Information']) {
+        throw new Error('Invalid API key or rate limit exceeded');
       }
       
       // Store API key securely
