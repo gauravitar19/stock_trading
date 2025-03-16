@@ -10,6 +10,17 @@ export default function Layout({ children, title = 'Stock Trading Platform' }) {
   const [apiKey, setApiKey] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [connectionError, setConnectionError] = useState('');
+  
+  // Check for existing connection on load
+  useEffect(() => {
+    const savedApiKey = localStorage.getItem('stockTradingApiKey');
+    if (savedApiKey) {
+      setApiKey(savedApiKey);
+      setIsConnected(true);
+    }
+  }, []);
   
   // Handle scroll effect
   useEffect(() => {
@@ -29,20 +40,48 @@ export default function Layout({ children, title = 'Stock Trading Platform' }) {
     if (isConnected) {
       // Disconnect from API
       setIsConnected(false);
-      // You would also want to remove API key from local storage or state
+      localStorage.removeItem('stockTradingApiKey');
+      setApiKey('');
     } else {
       // Show modal to enter API key
       setShowModal(true);
+      setConnectionError('');
     }
   };
 
-  const handleSubmitApiKey = (e) => {
+  const handleSubmitApiKey = async (e) => {
     e.preventDefault();
-    // In a real application, you would validate the API key and establish a connection
-    console.log('Connecting with API key:', apiKey);
-    setIsConnected(true);
-    setShowModal(false);
-    // You might want to store the API key in local storage or a secure cookie
+    
+    if (!apiKey.trim()) {
+      setConnectionError('API key cannot be empty');
+      return;
+    }
+    
+    setIsConnecting(true);
+    setConnectionError('');
+    
+    try {
+      // Simulate API validation with a timeout
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // In a real app, this would be an actual API call to verify the key
+      if (apiKey === 'invalid') {
+        throw new Error('Invalid API key');
+      }
+      
+      // Store API key securely
+      localStorage.setItem('stockTradingApiKey', apiKey);
+      
+      // Update state
+      setIsConnected(true);
+      setShowModal(false);
+      
+    } catch (error) {
+      console.error('Connection error:', error);
+      setConnectionError(error.message || 'Failed to connect. Please try again.');
+    } finally {
+      setIsConnecting(false);
+    }
   };
 
   const toggleMobileMenu = () => {
@@ -101,8 +140,17 @@ export default function Layout({ children, title = 'Stock Trading Platform' }) {
                     ? 'bg-green-600 hover:bg-green-700 text-white' 
                     : 'bg-exchange-blue hover:bg-blue-700 text-white'
                 }`}
+                disabled={isConnecting}
               >
-                {isConnected ? 'Connected ✓' : 'Connect API'}
+                {isConnecting ? (
+                  <span className="flex items-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Connecting...
+                  </span>
+                ) : isConnected ? 'Connected ✓' : 'Connect API'}
               </button>
             </div>
             
@@ -115,8 +163,9 @@ export default function Layout({ children, title = 'Stock Trading Platform' }) {
                     ? 'bg-green-600 hover:bg-green-700 text-white' 
                     : 'bg-exchange-blue hover:bg-blue-700 text-white'
                 }`}
+                disabled={isConnecting}
               >
-                {isConnected ? 'Connected ✓' : 'Connect'}
+                {isConnecting ? '...' : isConnected ? 'Connected ✓' : 'Connect'}
               </button>
               
               <button
@@ -186,6 +235,7 @@ export default function Layout({ children, title = 'Stock Trading Platform' }) {
               <button 
                 onClick={() => setShowModal(false)}
                 className="text-gray-400 hover:text-gray-500 transition-colors"
+                disabled={isConnecting}
               >
                 <span className="text-2xl">&times;</span>
               </button>
@@ -197,25 +247,49 @@ export default function Layout({ children, title = 'Stock Trading Platform' }) {
                   id="apiKey"
                   type="text"
                   value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
-                  className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-exchange-blue transition-all"
+                  onChange={(e) => {
+                    setApiKey(e.target.value);
+                    if (connectionError) setConnectionError('');
+                  }}
+                  className={`w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-exchange-blue transition-all ${
+                    connectionError ? 'border-red-500' : ''
+                  }`}
                   placeholder="Enter your API key"
                   required
+                  disabled={isConnecting}
                 />
+                {connectionError && (
+                  <p className="mt-2 text-sm text-red-600">{connectionError}</p>
+                )}
+                <p className="mt-2 text-xs text-gray-500">
+                  For demo purposes, use any API key except "invalid"
+                </p>
               </div>
               <div className="flex justify-end">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
                   className="mr-2 px-4 py-2 text-gray-500 hover:text-gray-700 transition-colors"
+                  disabled={isConnecting}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-exchange-blue text-white rounded-md hover:bg-blue-700 transition-colors"
+                  className={`px-4 py-2 bg-exchange-blue text-white rounded-md hover:bg-blue-700 transition-colors flex items-center ${
+                    isConnecting ? 'opacity-75 cursor-not-allowed' : ''
+                  }`}
+                  disabled={isConnecting}
                 >
-                  Connect
+                  {isConnecting ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Connecting...
+                    </>
+                  ) : 'Connect'}
                 </button>
               </div>
             </form>
