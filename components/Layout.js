@@ -192,7 +192,7 @@ export default function Layout({ children, title = 'Exchange Core' }) {
               </p>
             </div>
             <div className="flex space-x-6">
-              <a href="https://github.com/mzheravin/exchange-core" className="text-gray-500 hover:text-gray-700">
+              <a href="https://github.com/gauravitar19/stock_trading" className="text-gray-500 hover:text-gray-700">
                 GitHub
               </a>
               <a href="#" className="text-gray-500 hover:text-gray-700">
