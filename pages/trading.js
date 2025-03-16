@@ -21,7 +21,7 @@ export default function Trading() {
   };
 
   return (
-    <Layout title="Exchange Core - Trading">
+    <Layout title="Stock Trading Platform - Trading">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-2">
           <div className="bg-white rounded-lg shadow-md p-6">
@@ -173,11 +173,11 @@ export default function Trading() {
       <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-4 text-exchange-blue">How Trading Works</h2>
         <p className="text-gray-700 mb-4">
-          In a real implementation, the trading interface would connect to your Exchange Core backend through APIs.
-          The Java-based Exchange Core system would handle the actual order matching, risk management, and settlement.
+          In a real implementation, the trading interface would connect to your Stock Trading Platform backend through APIs.
+          The Java-based Stock Trading Platform system would handle the actual order matching, risk management, and settlement.
         </p>
         <p className="text-gray-700">
-          Exchange Core supports different order types including Immediate-or-Cancel (IOC), Good-till-Cancel (GTC),
+          Stock Trading Platform supports different order types including Immediate-or-Cancel (IOC), Good-till-Cancel (GTC),
           and Fill-or-Kill Budget (FOK-B) with extremely low latency processing.
         </p>
       </div>

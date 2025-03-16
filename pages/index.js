@@ -2,7 +2,7 @@ import Layout from '../components/Layout';
 
 export default function Home() {
   return (
-    <Layout title="Exchange Core - Dashboard">
+    <Layout title="Stock Trading Platform - Dashboard">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold mb-4 text-exchange-blue">System Status</h2>

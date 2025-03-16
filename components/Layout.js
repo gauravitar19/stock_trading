@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-export default function Layout({ children, title = 'Exchange Core' }) {
+export default function Layout({ children, title = 'Stock Trading Platform' }) {
   const router = useRouter();
   const [isConnected, setIsConnected] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -37,7 +37,7 @@ export default function Layout({ children, title = 'Exchange Core' }) {
     <div className="min-h-screen bg-gray-50">
       <Head>
         <title>{title}</title>
-        <meta name="description" content="Exchange Core - High-performance matching engine" />
+        <meta name="description" content="Stock Trading Platform - High-performance matching engine" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -47,7 +47,7 @@ export default function Layout({ children, title = 'Exchange Core' }) {
             <div className="flex">
               <div className="flex-shrink-0 flex items-center">
                 <Link href="/">
-                  <span className="text-2xl font-bold text-exchange-blue cursor-pointer">Exchange Core</span>
+                  <span className="text-2xl font-bold text-exchange-blue cursor-pointer">Stock Trading Platform</span>
                 </Link>
               </div>
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -188,7 +188,7 @@ export default function Layout({ children, title = 'Exchange Core' }) {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <p className="text-gray-500 text-sm">
-                &copy; {new Date().getFullYear()} Exchange Core. All rights reserved.
+                &copy; {new Date().getFullYear()} Stock Trading Platform. All rights reserved.
               </p>
             </div>
             <div className="flex space-x-6">

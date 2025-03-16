@@ -1,10 +1,10 @@
-# Exchange Core UI
+# Stock Trading Platform UI
 
-This is a frontend visualization and demo for the [Exchange Core](https://github.com/gauravitar19/stock_trading) Java-based trading engine.
+This is a frontend visualization and demo for the [Stock Trading Platform](https://github.com/gauravitar19/stock_trading) Java-based trading engine.
 
 ## Overview
 
-Exchange Core UI provides a modern web interface to demonstrate the capabilities of the Exchange Core trading engine. While the actual trading engine is implemented in Java and runs as a separate backend service, this frontend provides:
+Stock Trading Platform UI provides a modern web interface to demonstrate the capabilities of the Stock Trading Platform trading engine. While the actual trading engine is implemented in Java and runs as a separate backend service, this frontend provides:
 
 - Dashboard with system status and recent trades
 - Order book visualization
@@ -47,7 +47,7 @@ This project is designed to be easily deployed on Vercel:
 
 ## Backend Connection
 
-In a real-world scenario, this UI would connect to the Java-based Exchange Core backend through APIs. The Java backend would handle:
+In a real-world scenario, this UI would connect to the Java-based Stock Trading Platform backend through APIs. The Java backend would handle:
 
 - Order matching and execution
 - Risk management

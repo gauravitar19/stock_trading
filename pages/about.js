@@ -2,14 +2,14 @@ import Layout from '../components/Layout';
 
 export default function About() {
   return (
-    <Layout title="Exchange Core - About">
+    <Layout title="Stock Trading Platform - About">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-exchange-blue mb-6">About Exchange Core</h1>
+        <h1 className="text-3xl font-bold text-exchange-blue mb-6">About Stock Trading Platform</h1>
         
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <h2 className="text-2xl font-bold mb-4 text-exchange-blue">Overview</h2>
           <p className="text-gray-700 mb-4">
-            Exchange Core is an open source market exchange core based on LMAX Disruptor, Eclipse Collections,
+            Stock Trading Platform is an open source market exchange core based on LMAX Disruptor, Eclipse Collections,
             Real Logic Agrona, OpenHFT Chronicle-Wire, LZ4 Java, and Adaptive Radix Trees.
           </p>
           
@@ -32,7 +32,7 @@ export default function About() {
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <h2 className="text-2xl font-bold mb-4 text-exchange-blue">Performance</h2>
           <p className="text-gray-700 mb-4">
-            Exchange Core is optimized for high-throughput and low-latency operations:
+            Stock Trading Platform is optimized for high-throughput and low-latency operations:
           </p>
           
           <ul className="list-disc pl-6 text-gray-700 mb-6">
@@ -70,12 +70,12 @@ export default function About() {
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-2xl font-bold mb-4 text-exchange-blue">Frontend Demo</h2>
           <p className="text-gray-700 mb-4">
-            This web interface provides a visual demonstration of the Exchange Core capabilities. In a real implementation,
-            this frontend would connect to a Java-based Exchange Core backend running elsewhere.
+            This web interface provides a visual demonstration of the Stock Trading Platform capabilities. In a real implementation,
+            this frontend would connect to a Java-based Stock Trading Platform backend running elsewhere.
           </p>
           
           <p className="text-gray-700">
-            The frontend is built with Next.js and deployed on Vercel, while the full Exchange Core codebase is
+            The frontend is built with Next.js and deployed on Vercel, while the full Stock Trading Platform codebase is
             available at <a href="https://github.com/gauravitar19/stock_trading" className="text-exchange-blue hover:underline">
               https://github.com/gauravitar19/stock_trading
             </a>.

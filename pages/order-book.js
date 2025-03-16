@@ -44,7 +44,7 @@ export default function OrderBook() {
   const currentOrderBook = orderBookData[selectedSymbol];
 
   return (
-    <Layout title={`Exchange Core - ${selectedSymbol} Order Book`}>
+    <Layout title={`Stock Trading Platform - ${selectedSymbol} Order Book`}>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-exchange-blue">{selectedSymbol} Order Book</h1>
         <div className="flex items-center space-x-2">
