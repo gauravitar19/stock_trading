@@ -1,12 +1,36 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export default function Layout({ children, title = 'Exchange Core' }) {
   const router = useRouter();
+  const [isConnected, setIsConnected] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [apiKey, setApiKey] = useState('');
   
   const isActive = (path) => {
     return router.pathname === path ? 'bg-exchange-blue text-white' : 'text-gray-700 hover:bg-gray-100';
+  };
+
+  const handleConnect = () => {
+    if (isConnected) {
+      // Disconnect from API
+      setIsConnected(false);
+      // You would also want to remove API key from local storage or state
+    } else {
+      // Show modal to enter API key
+      setShowModal(true);
+    }
+  };
+
+  const handleSubmitApiKey = (e) => {
+    e.preventDefault();
+    // In a real application, you would validate the API key and establish a connection
+    console.log('Connecting with API key:', apiKey);
+    setIsConnected(true);
+    setShowModal(false);
+    // You might want to store the API key in local storage or a secure cookie
   };
 
   return (
@@ -58,8 +82,15 @@ export default function Layout({ children, title = 'Exchange Core' }) {
               </div>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:items-center">
-              <button className="bg-exchange-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Connect API
+              <button 
+                onClick={handleConnect}
+                className={`font-bold py-2 px-4 rounded ${
+                  isConnected 
+                    ? 'bg-green-600 hover:bg-green-700 text-white' 
+                    : 'bg-exchange-blue hover:bg-blue-700 text-white'
+                }`}
+              >
+                {isConnected ? 'Connected ✓' : 'Connect API'}
               </button>
             </div>
           </div>
@@ -88,6 +119,16 @@ export default function Layout({ children, title = 'Exchange Core' }) {
                 About
               </span>
             </Link>
+            <button 
+              onClick={handleConnect}
+              className={`mt-2 block w-full text-left pl-3 pr-4 py-2 rounded-md text-base font-medium cursor-pointer ${
+                isConnected 
+                  ? 'bg-green-600 text-white' 
+                  : 'bg-exchange-blue text-white'
+              }`}
+            >
+              {isConnected ? 'Connected ✓' : 'Connect API'}
+            </button>
           </div>
         </div>
       </nav>
@@ -95,6 +136,52 @@ export default function Layout({ children, title = 'Exchange Core' }) {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {children}
       </main>
+
+      {/* API Key Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+          <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-medium text-exchange-blue">Connect to API</h3>
+              <button 
+                onClick={() => setShowModal(false)}
+                className="text-gray-400 hover:text-gray-500"
+              >
+                <span className="text-2xl">&times;</span>
+              </button>
+            </div>
+            <form onSubmit={handleSubmitApiKey}>
+              <div className="mb-4">
+                <label htmlFor="apiKey" className="block text-gray-700 mb-2">API Key</label>
+                <input
+                  id="apiKey"
+                  type="text"
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                  className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-exchange-blue"
+                  placeholder="Enter your API key"
+                  required
+                />
+              </div>
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="mr-2 px-4 py-2 text-gray-500 hover:text-gray-700"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-exchange-blue text-white rounded hover:bg-blue-700"
+                >
+                  Connect
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <footer className="bg-white border-t">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
